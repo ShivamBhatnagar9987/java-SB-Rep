@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;LoginUsingCookies/WebContent/profile.jsp&apos; to &apos;link.jsp&apos;" description="Rename resource &apos;profile.jsp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="WebContent/profile.jsp" name="link.jsp" stamp="1560326650178" updateReferences="true"/>
+</session>

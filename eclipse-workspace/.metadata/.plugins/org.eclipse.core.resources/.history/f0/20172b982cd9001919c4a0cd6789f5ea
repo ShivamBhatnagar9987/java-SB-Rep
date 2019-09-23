@@ -1,0 +1,20 @@
+import java.util.concurrent.Callable;
+
+public class CallableAdder implements Callable<int[]> {
+	Integer op1, op2;
+
+	public CallableAdder(int op1, int op2) {
+		this.op1 = op1;
+		this.op2 = op2;
+	}
+
+	public int[] call() {
+
+		int[] ar = new int[] { 10, 20 };
+		return init(ar);
+	}
+
+	public int[] init(int[] ar) {
+		return ar;
+	}
+}

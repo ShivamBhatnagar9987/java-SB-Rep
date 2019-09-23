@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Delete resource &apos;DesignPatternsInJava/src/child&apos;" deleteContents="false" description="Delete resource &apos;DesignPatternsInJava/src/child&apos;" element1="/DesignPatternsInJava/src/child" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1554449585170"/>
-</session>

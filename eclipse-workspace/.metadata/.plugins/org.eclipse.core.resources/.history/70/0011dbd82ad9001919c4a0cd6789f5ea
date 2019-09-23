@@ -1,8 +1,0 @@
-
-public class MainThread {
-	public static void main(String[] args) {
-		Thread t1 = new Thread((Runnable) new CallableAdder(10, 20));
-		t1.start();
-	}
-
-}

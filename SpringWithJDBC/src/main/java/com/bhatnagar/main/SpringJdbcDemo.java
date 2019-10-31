@@ -11,7 +11,7 @@ public class SpringJdbcDemo {
 		@SuppressWarnings("resource")
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 		JdbcDaoImpl j = applicationContext.getBean("jdbcDaoImpl", JdbcDaoImpl.class);
-		User u=j.getUser();
+		User u = j.getUser();
 		System.out.println(u.getName());
 	}
 }

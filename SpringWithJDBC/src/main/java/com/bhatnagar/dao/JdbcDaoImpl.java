@@ -20,7 +20,7 @@ public class JdbcDaoImpl {
 	public DataSource getDataSource() {
 		return dataSource;
 	}
-	
+
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
@@ -28,19 +28,24 @@ public class JdbcDaoImpl {
 	private static Connection con = null;
 
 	public User getUser() {
+		User u = new User();
 		try {
-			dataSource.getConnection();
-			PreparedStatement ps= con.prepareStatement("select * from user905 where id=?");
+			con = dataSource.getConnection();
+			PreparedStatement ps = con.prepareStatement("select * from user905 where id=?");
 			ps.setInt(1, 1);
-			ResultSet res=ps.executeQuery();
-			User u=new User();
-			u.setId(res.getString(1));
-			System.out.println(u.getId());
-			
+			ResultSet res = ps.executeQuery();
+			while (res.next()) {
+				u.setId(res.getString(1));
+				u.setName(res.getString(2));
+				u.setPassword(res.getString(3));
+				u.setEmail(res.getString(4));
+				u.setCountry(res.getString(5));
+			}
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return u;
 	}
 }

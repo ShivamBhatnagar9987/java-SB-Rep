@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import com.bhatnagar.model.User;
@@ -68,8 +69,37 @@ public class JdbcDaoImpl {
 		User u = new User();
 		System.out.println(jdbcTemplate.queryForObject("select count(*) from user905", Integer.class));
 		// System.out.println(u);
-		//u=jdbcTemplate.queryForObject("select * from user905", User.class);
-		
+		// u=jdbcTemplate.queryForObject("select * from user905", User.class);
+
 		return u;
+	}
+
+	public User getUserName() {
+		User u = new User();
+		String sql = "select name from user905 where id=?";
+		System.out.println(jdbcTemplate.queryForObject(sql, new Object[] { 1 }, String.class));
+		return u;
+	}
+
+	public User getUserForId() {
+		String sql = "select * from user905 where id=?";
+		return jdbcTemplate.queryForObject(sql, new Object[] { 1 }, new UserMapper());
+	}
+
+	public List getAllUsers() {
+		String sql = "select * from user905";
+		return jdbcTemplate.query(sql, new UserMapper());
+	}
+
+	private static final class UserMapper implements RowMapper<User> {
+
+		@Override
+		public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+			User u = new User();
+			u.setId(rs.getInt("id") + "");
+			u.setName(rs.getString("name"));
+			return u;
+		}
+
 	}
 }

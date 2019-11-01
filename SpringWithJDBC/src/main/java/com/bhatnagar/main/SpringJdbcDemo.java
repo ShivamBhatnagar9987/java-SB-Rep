@@ -18,12 +18,21 @@ public class SpringJdbcDemo {
 		// User u=j.getUserName();
 		// User u = j.getUserForId();
 		// System.out.println(u.getName());
-		System.out.println(j.getAllUsers().size());
+		// System.out.println(j.getAllUsers().size());
 		@SuppressWarnings("unchecked")
 		List<User> userList = j.getAllUsers();
 		Iterator<User> it = userList.iterator();
 		while (it.hasNext()) {
 			System.out.println(it.next().getName());
 		}
+		User user1 = new User();
+		user1.setId(4 + "");
+		user1.setName("inserted from spring using jdbcTemplate");
+		// j.insertUser(user1);
+		User user2 = new User();
+		user2.setId(5 + "");
+		user2.setName("inserted from spring using namedParameterJdbcTemplate");
+		j.insertUserNamedParam(user2);
+
 	}
 }

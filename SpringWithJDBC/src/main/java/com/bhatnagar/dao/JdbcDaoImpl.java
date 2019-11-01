@@ -1,7 +1,5 @@
 package com.bhatnagar.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -11,6 +9,9 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Component;
 
 import com.bhatnagar.model.User;
@@ -20,6 +21,7 @@ public class JdbcDaoImpl {
 
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
+	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
 	public JdbcTemplate getJdbcTemplate() {
 		return jdbcTemplate;
@@ -36,31 +38,32 @@ public class JdbcDaoImpl {
 	@Autowired
 	public void setDataSource(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
+		this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 	}
 
-	private static Connection con = null;
+	// private static Connection con = null;
 
-	public User getUserWithoutJdbcTemplate() {
-		User u = new User();
-		try {
-			con = dataSource.getConnection();
-			PreparedStatement ps = con.prepareStatement("select * from user905 where id=?");
-			ps.setInt(1, 1);
-			ResultSet res = ps.executeQuery();
-			while (res.next()) {
-				u.setId(res.getString(1));
-				u.setName(res.getString(2));
-				u.setPassword(res.getString(3));
-				u.setEmail(res.getString(4));
-				u.setCountry(res.getString(5));
-			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return u;
-	}
+//	public User getUserWithoutJdbcTemplate() {
+//		User u = new User();
+//		try {
+//			con = dataSource.getConnection();
+//			PreparedStatement ps = con.prepareStatement("select * from user905 where id=?");
+//			ps.setInt(1, 1);
+//			ResultSet res = ps.executeQuery();
+//			while (res.next()) {
+//				u.setId(res.getString(1));
+//				u.setName(res.getString(2));
+//				u.setPassword(res.getString(3));
+//				u.setEmail(res.getString(4));
+//				u.setCountry(res.getString(5));
+//			}
+//
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return u;
+//	}
 
 	/*
 	 * with JbdcTemplate
@@ -86,9 +89,22 @@ public class JdbcDaoImpl {
 		return jdbcTemplate.queryForObject(sql, new Object[] { 1 }, new UserMapper());
 	}
 
+	@SuppressWarnings("rawtypes")
 	public List getAllUsers() {
 		String sql = "select * from user905";
 		return jdbcTemplate.query(sql, new UserMapper());
+	}
+
+	public void insertUser(User user) {
+		String sql = "insert into user905(id,name) values(?,?)";
+		jdbcTemplate.update(sql, new Object[] { user.getId(), user.getName() });
+	}
+
+	public void insertUserNamedParam(User user) {
+		String sql = "insert into user905(id,name) values(:id,:name)";
+		SqlParameterSource namedParameters = new MapSqlParameterSource("id", user.getId()).addValue("name",
+				user.getName());
+		namedParameterJdbcTemplate.update(sql, namedParameters);
 	}
 
 	private static final class UserMapper implements RowMapper<User> {
@@ -102,4 +118,5 @@ public class JdbcDaoImpl {
 		}
 
 	}
+
 }

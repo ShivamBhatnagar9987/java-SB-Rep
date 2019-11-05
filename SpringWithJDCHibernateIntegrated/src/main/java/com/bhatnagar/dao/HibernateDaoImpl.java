@@ -21,8 +21,9 @@ public class HibernateDaoImpl {
 	}
 
 	public List getAllUsers() {
-		String sql = "from User";
+		String sql = "from User where id=:id";
 		Query query = getSessionFactory().openSession().createQuery(sql);
+		query.setString("id", "2");
 		List userList = query.list();
 		// System.out.println(userList);
 		return userList;

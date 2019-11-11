@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class CourseService {
 
 	@Autowired
-	private CourseRepository topicRepository;
+	private CourseRepository courseRepository;
 
 	/*
 	 * private List<Topic> topics = new ArrayList<Topic>( Arrays.asList(new
@@ -21,35 +21,35 @@ public class CourseService {
 	 * ));
 	 */
 
-	public List<Course> getAllTopics() {
+	public List<Course> getAllCourses(String id) {
 		// return topics;
-		List<Course> topics = new ArrayList<>();
-		topicRepository.findAll().forEach(topics::add);
-		return topics;
+		List<Course> courses = new ArrayList<>();
+		courseRepository.findAll().forEach(courses::add);
+		return courses;
 	}
 
-	public Course getTopicById(String id) {
+	public Course getCourseById(String id) {
 		// return topics.stream().filter(t -> t.getId().equals(id)).findFirst().get();
-		return topicRepository.findOne(id);
+		return courseRepository.findOne(id);
 	}
 
-	public void addTopic(Course topic) {
+	public void addCourse(Course course) {
 		// topics.add(topic);
-		topicRepository.save(topic);
+		courseRepository.save(course);
 	}
 
-	public void updateTopic(String id, Course topic) {
+	public void updateCourse(Course course) {
 //		for (int i = 0; i < topics.size(); i++) {
 //			Topic t = topics.get(i);
 //			if (t.getId().equals(id)) {
 //				topics.set(i, topic);
 //			}
 //		}
-		topicRepository.save(topic);
+		courseRepository.save(course);
 	}
 
-	public void deleteTopic(String id) {
+	public void deleteCourse(String id) {
 		// topics.removeIf(t -> t.getId().equals(id));
-		topicRepository.delete(id);
+		courseRepository.delete(id);
 	}
 }

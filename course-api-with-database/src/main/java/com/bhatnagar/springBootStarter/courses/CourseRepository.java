@@ -1,5 +1,7 @@
 package com.bhatnagar.springBootStarter.courses;
 
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +11,5 @@ public interface CourseRepository extends CrudRepository<Course, String> {
 	 * getAllTopics() getTopic(String id) updateTopic(Topic t) deleteTopic(String
 	 * id)
 	 */
+	public List<Course> getTopicByCourses(String topicId);
 }
